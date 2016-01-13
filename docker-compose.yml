@@ -1,0 +1,66 @@
+data:
+    image: 'busybox'
+    tty: true
+    container_name: 'php-dev-stack_data'
+    volumes:
+      - './data/www/:/var/www/'
+      - './data/mysql/:/var/lib/mysql/'
+      - './data/mongo/:/data/db/'
+      - './data/nginx/:/etc/nginx/sites-enabled/'
+      - './data/ssl/:/etc/nginx/ssl/'
+
+nginx:
+    build: 'images/nginx'
+    restart: 'always'
+    links:
+        - 'php-fpm'
+    ports:
+        - '80:80'
+        - '443:443'
+    volumes_from:
+        - 'data'
+
+php-fpm:
+    build: 'images/php7.0-fpm'
+    restart: always
+    links:
+        - 'mysql'
+        - 'memcached'
+        - 'mongo'
+        - 'redis'
+    expose:
+        - '9000'
+    volumes_from:
+        - 'data'
+
+mongo:
+    image: mongo:3.2.1
+    restart: 'always'
+    volumes_from:
+        - 'data'
+    expose:
+      - "27017"
+
+mysql:
+    image: mariadb:10.1
+    restart: 'always'
+    volumes_from:
+        - 'data'
+    expose:
+      - "3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
+memcached:
+    image: memcached:1.4.25
+    restart: 'always'
+    mem_limit: 100m
+    expose:
+      - "11211"
+
+redis:
+    image: redis:3.0.6
+    restart: 'always'
+    mem_limit: 100m
+    expose:
+      - "6379"

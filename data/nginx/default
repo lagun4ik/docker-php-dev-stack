@@ -1,0 +1,48 @@
+upstream php-fpm {
+    server php-fpm:9000;
+}
+
+server {
+    listen 80;
+
+    server_name site;
+    root /var/www/site;
+    index index.php index.html;
+
+
+    pagespeed RewriteLevel CoreFilters;
+    pagespeed LoadFromFile "http://site/" "/var/www/site";
+
+    pagespeed EnableFilters pagespeed EnableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
+
+    #pagespeed DisableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
+    
+    #location / {
+    #    try_files $uri $uri/ /index.php$args;
+    #}
+
+    #location ~ \.php$ {
+    #    fastcgi_index index.php;
+    #    fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    #    fastcgi_pass php-fpm;
+    #    include /etc/nginx/fastcgi_params;
+    #    fastcgi_param  SCRIPT_FILENAME  $realpath_root$fastcgi_script_name;
+    #    fastcgi_param DOCUMENT_ROOT $realpath_root;
+    #}
+
+    location = /favicon.ico {
+        log_not_found off;
+        access_log off;
+    }
+
+    location = /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+    
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+        expires max;
+        log_not_found off;
+    }
+}
