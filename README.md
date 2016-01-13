@@ -1,8 +1,6 @@
 Dockerized PHP development stack
 --------------------------
 
-##php7, nginx1.9, MySQL (MariaDB), MongoDB, Redis, Memcached
-
 **PHP:** 7.0.2 with redis mongodb memcached composer
 
 **Nginx:** 1.9.9 with pagespeed_module upload-progress-module
