@@ -43,6 +43,7 @@ RUN buildDeps=" \
         libmcrypt-dev \
         libgd2-xpm-dev \
         libgmp-dev \
+        libmysqlclient-dev \
         curl \
     " \
     && set -x \
@@ -78,7 +79,8 @@ RUN cd /usr/src/php && ./configure \
         --with-curl=/usr/bin \
         --with-bz2 \
         --enable-sockets \
-        --with-pdo-mysqlnd \
+        --with-mysqli=mysqlnd \
+        --with-pdo-mysql=mysqlnd \
         --with-gd \
         --with-pear \
         --with-tsrm-pthreads \
