@@ -12,6 +12,9 @@ ENV PHP_USER www-data
 ENV PHP_AUTOCONF /usr/bin/autoconf
 ENV ENV_TYPE development
 
+RUN rm -rf /etc/apt/sources.list
+ADD sources.list /etc/apt/
+
 # persistent / runtime deps
 RUN apt-get update && apt-get install -y ca-certificates wget librecode0 libmagickwand-dev libsasl2-dev libmemcached-dev imagemagick libsqlite3-0 libxml2 --no-install-recommends && rm -r /var/lib/apt/lists/*
 
