@@ -3,6 +3,11 @@ sudo: required
 services:
   - docker
 
+# blacklist
+branches:
+  except:
+    - selectel
+
 env:
   DOCKER_COMPOSE_VERSION: 1.5.2
 
