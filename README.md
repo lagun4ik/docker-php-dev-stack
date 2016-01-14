@@ -1,17 +1,20 @@
 Dockerized PHP development stack
 --------------------------
 
-**PHP:** 7.0.2 with redis mongodb memcached composer
+>php7, nginx1.9, MySQL (MariaDB), MongoDB, Redis, Memcached
 
-**Nginx:** 1.9.9 with pagespeed_module upload-progress-module
+[![Build Status](https://travis-ci.org/lagun4ik/docker-php-dev-stack.svg)](https://travis-ci.org/lagun4ik/docker-php-dev-stack)
 
-**MySQL:** 10.1
-
-**MongoDB:** 3.2.1
-
-**Redis:** 3.0.6
-
-**Memcached:** 1.4.25
+* [Nginx 1.9.9](http://nginx.org/)
+ * [ngx_pagespeed](https://github.com/pagespeed/ngx_pagespeed)
+ * [nginx-upload-progress-module](https://github.com/masterzen/nginx-upload-progress-module)
+* [PHP7.0-FPM](http://php-fpm.org/) 
+ * [Installed php modules](#installed-php-modules)
+ * [Composer](https://getcomposer.org/)
+* [MariaDB 3.2](https://mariadb.org/)
+* [MongoDB 3.2](http://www.mongodb.org/)
+* [Memcached 1.4.25](http://memcached.org/)
+* [Redis 3.0.6](http://redis.io/)
 
 
 ## Run
@@ -40,6 +43,56 @@ docker-compose -p php-dev-stack logs
 
 # specific service
 docker-compose -p php-dev-stack logs nginx
+```
+
+##Installed php modules
+```
+bcmath
+bz2
+Core
+ctype
+curl
+date
+dom
+exif
+fileinfo
+filter
+gd
+gettext
+hash
+iconv
+intl
+json
+libxml
+mbstring
+mcrypt
+memcached
+mongodb
+openssl
+pcntl
+pcre
+PDO
+pdo_sqlite
+Phar
+posix
+readline
+recode
+redis
+Reflection
+session
+SimpleXML
+sockets
+SPL
+sqlite3
+standard
+tokenizer
+xml
+xmlreader
+xmlwriter
+Zend OPcache
+zip
+zlib
+Zend OPcache
 ```
 
 ##Thanks

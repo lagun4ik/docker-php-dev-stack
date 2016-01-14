@@ -10,9 +10,6 @@ ENV UPM_VERSION 0.9.1
 ENV NGINX_USER www-data
 ENV SETUP_DIR /var/cache/nginx
 
-RUN rm -rf /etc/apt/sources.list
-ADD sources.list /etc/apt/
-
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \

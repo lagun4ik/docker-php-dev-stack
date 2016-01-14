@@ -3,6 +3,7 @@ FROM phusion/baseimage:
 MAINTAINER ivan@lagunovsky.com
 
 ENV DEBIAN_FRONTEND noninteractive
+
 ENV PHP_INI_DIR /etc/php/7.0/fpm/
 ENV PHP_VERSION 7.0.2
 ENV PHP_FILENAME php-7.0.2.tar.xz
@@ -10,10 +11,6 @@ ENV PHP_SHA256 556121271a34c442b48e3d7fa3d3bbb4413d91897abbb92aaeced4a7df5f2ab2
 ENV PHP_USER www-data
 ENV PHP_AUTOCONF /usr/bin/autoconf
 ENV ENV_TYPE development
-ENV PHP_TIMEZONE Minsk
-
-RUN rm -rf /etc/apt/sources.list
-ADD sources.list /etc/apt/
 
 # persistent / runtime deps
 RUN apt-get update && apt-get install -y ca-certificates wget librecode0 libmagickwand-dev libsasl2-dev libmemcached-dev imagemagick libsqlite3-0 libxml2 --no-install-recommends && rm -r /var/lib/apt/lists/*
@@ -112,15 +109,6 @@ RUN apt-get update && apt-get install -y $PHP_AMQP_BUILD_DEPS --no-install-recom
 #Must be keep
 RUN apt-get update && apt-get install -y libmagickwand-dev libvips-dev libgsf-1-dev libmagickcore-dev libevent-dev --no-install-recommends && rm -r /var/lib/apt/lists/*
 
-RUN cd /usr/lib && \
-    git clone --depth=1 -b v0.7.1 git://github.com/alanxz/rabbitmq-c.git && \
-    cd rabbitmq-c && \
-    git submodule update --init && \
-    autoreconf -i && \
-    ./configure && \
-    make && \
-    make install
-
 # MONGO
 RUN cd /etc && git clone --depth=1 -b 1.1.1 https://github.com/mongodb/mongo-php-driver.git \
     && cd /etc/mongo-php-driver \
@@ -163,10 +151,6 @@ RUN rm -Rf /usr/lib/rabbitmq-c
 
 # Create php.ini
 RUN curl https://raw.githubusercontent.com/php/php-src/PHP-$PHP_VERSION/php.ini-$ENV_TYPE -o $PHP_INI_DIR/php.ini
-
-# Yes my lord, i'm gentle
-RUN sed -i 's/\;date\.timezone\ \=/date\.timezone\ \=\ Europe\/{$PHP_TIMEZONE}/g' $PHP_INI_DIR/php.ini
-RUN sed -i "s/error_reporting = .*/error_reporting = E_ALL ^ E_STRICT/" $PHP_INI_DIR/php.ini
 
 ADD config/php-fpm.conf $PHP_INI_DIR/php-fpm.conf
 ADD config/www.conf $PHP_INI_DIR/pool.d/www.conf
