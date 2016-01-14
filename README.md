@@ -14,10 +14,6 @@ Dockerized PHP development stack [![Build Status](https://travis-ci.org/lagun4ik
 * [Memcached 1.4.25](http://memcached.org/)
 * [Redis 3.0.6](http://redis.io/)
 
-## Requirements
-
-* Build - 512MB RAM + 1GB of swap
-* Run  - 512MB RAM`
 
 ## Run
 
