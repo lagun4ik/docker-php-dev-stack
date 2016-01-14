@@ -3,6 +3,10 @@ sudo: required
 services:
   - docker
 
+branches:
+  only:
+    - master
+
 env:
   DOCKER_COMPOSE_VERSION: 1.5.2
 
