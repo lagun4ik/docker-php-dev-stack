@@ -10,7 +10,7 @@ data:
       - './data/ssl/:/etc/nginx/ssl/'
 
 nginx:
-    build: 'images/nginx'
+    image: 'lagun4ik/docker-nginx-pagespeed'
     restart: 'always'
     links:
         - 'php-fpm'
@@ -21,7 +21,7 @@ nginx:
         - 'data'
 
 php-fpm:
-    build: 'images/php7.0-fpm'
+    image: 'lagun4ik/docker-php7-fpm'
     restart: always
     links:
         - 'mysql'
