@@ -25,6 +25,7 @@ php-fpm:
     links:
         - 'mysql'
         - 'memcached'
+        - 'redis'
     expose:
         - '9000'
     volumes_from:
