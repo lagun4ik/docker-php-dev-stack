@@ -32,6 +32,13 @@ git clone -b master https://github.com/lagun4ik/docker-php-dev-stack.git
 docker-compose -p php-dev-stack up -d
 ```
 
+## Utilities
+Install phpMyAdmin, phpMemcachedAdmin, pagespeedAdmin, phpRedisAdmin
+```bash
+./setup-utilities.sh
+```
+Go to `http://you_server_ip/`
+
 ## Show services
 
 ```bash
