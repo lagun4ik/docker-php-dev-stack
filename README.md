@@ -1,24 +1,6 @@
 Dockerized PHP development stack [![Build Status](https://travis-ci.org/lagun4ik/docker-php-dev-stack.svg)](https://travis-ci.org/lagun4ik/docker-php-dev-stack)
 --------------------------
 
-## Include
-
-* [Nginx 1.9.9](http://nginx.org/)
- * [ngx_pagespeed](https://github.com/pagespeed/ngx_pagespeed)
- * [nginx-upload-progress-module](https://github.com/masterzen/nginx-upload-progress-module)
-* [PHP7.0-FPM](http://php-fpm.org/)
- * [Installed php modules](#installed-php-modules)
- * [Composer](https://getcomposer.org/)
-* [MariaDB 3.2](https://mariadb.org/)
-* [MongoDB 3.2](http://www.mongodb.org/)
-* [Memcached 1.4.25](http://memcached.org/)
-* [Redis 3.0.6](http://redis.io/)
-
-## Requirements
-
-* Build - 512MB RAM + 1GB of swap
-* Run  - 512MB RAM`
-
 ## Run
 
 ```bash
@@ -67,56 +49,3 @@ docker-compose -p php-dev-stack logs
 # specific service
 docker-compose -p php-dev-stack logs nginx
 ```
-
-##Installed php modules
-```
-bcmath
-bz2
-Core
-ctype
-curl
-date
-dom
-exif
-fileinfo
-filter
-gd
-gettext
-hash
-iconv
-intl
-json
-libxml
-mbstring
-mcrypt
-memcached
-mongodb
-openssl
-pcntl
-pcre
-PDO
-pdo_sqlite
-Phar
-posix
-readline
-recode
-redis
-Reflection
-session
-SimpleXML
-sockets
-SPL
-sqlite3
-standard
-tokenizer
-xml
-xmlreader
-xmlwriter
-Zend OPcache
-zip
-zlib
-Zend OPcache
-```
-
-##Thanks
-@ProPheT777

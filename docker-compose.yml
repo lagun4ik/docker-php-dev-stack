@@ -5,12 +5,11 @@ data:
     volumes:
       - './data/www/:/var/www/'
       - './data/mysql/:/var/lib/mysql/'
-      - './data/mongo/:/data/db/'
       - './data/nginx/:/etc/nginx/sites-enabled/'
       - './data/ssl/:/etc/nginx/ssl/'
 
 nginx:
-    build: 'images/nginx'
+    image: 'lagun4ik/docker-nginx-pagespeed'
     restart: 'always'
     links:
         - 'php-fpm'
@@ -21,25 +20,15 @@ nginx:
         - 'data'
 
 php-fpm:
-    build: 'images/php7.0-fpm'
+    image: 'lagun4ik/docker-php7-fpm'
     restart: always
     links:
         - 'mysql'
         - 'memcached'
-        - 'mongo'
-        - 'redis'
     expose:
         - '9000'
     volumes_from:
         - 'data'
-
-mongo:
-    image: mongo:3.2.1
-    restart: 'always'
-    volumes_from:
-        - 'data'
-    expose:
-      - "27017"
 
 mysql:
     image: mariadb:10.1
@@ -57,10 +46,3 @@ memcached:
     mem_limit: 100m
     expose:
       - "11211"
-
-redis:
-    image: redis:3.0.6
-    restart: 'always'
-    mem_limit: 100m
-    expose:
-      - "6379"
