@@ -1,0 +1,17 @@
+{
+  "mail" : "examle@email.com",
+  "data" : [
+    {
+      "webRootPath":"NGINX_PATCH/examle.com",
+      "domains" : [
+        "examle.com","www.examle.com","top.examle.com"
+      ]
+    },
+    {
+      "webRootPath":"NGINX_PATCH/examle2.com",
+      "domains" : [
+        "examle2.com","www.examle2.com","top.examle2.com"
+      ]
+    }
+  ]
+}

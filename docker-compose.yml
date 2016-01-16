@@ -4,6 +4,7 @@ data:
     container_name: 'php-dev-stack_data'
     volumes:
       - './data/www/:/var/www/'
+      - './data/mongo/:/data/db/'
       - './data/mysql/:/var/lib/mysql/'
       - './data/nginx/:/etc/nginx/sites-enabled/'
       - './data/ssl/:/etc/nginx/ssl/'
@@ -39,6 +40,14 @@ php-fpm:
     volumes_from:
         - 'data'
 
+mongo:
+    image: mongo:3.2.1
+    restart: 'always'
+    volumes_from:
+        - 'data'
+    expose:
+      - "27017"
+
 mysql:
     image: mariadb:10.1
     restart: 'always'
@@ -55,3 +64,10 @@ memcached:
     mem_limit: 100m
     expose:
       - "11211"
+
+redis:
+    image: redis:3.0.6
+    restart: 'always'
+    mem_limit: 100m
+    expose:
+      - "6379"
