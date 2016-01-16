@@ -4,9 +4,12 @@ data:
     container_name: 'php-dev-stack_data'
     volumes:
       - './data/www/:/var/www/'
+      - './data/mongo/:/data/db/'
       - './data/mysql/:/var/lib/mysql/'
       - './data/nginx/:/etc/nginx/sites-enabled/'
       - './data/ssl/:/etc/nginx/ssl/'
+      - ./letsencrypt/live/:/etc/letsencrypt/live'
+      - ./letsencrypt/domains.json:/domains.json'
 
 nginx:
     image: 'lagun4ik/docker-nginx-pagespeed'
@@ -16,6 +19,12 @@ nginx:
     ports:
         - '80:80'
         - '443:443'
+    volumes_from:
+        - 'data'
+
+letsencrypt:
+    image: 'lagun4ik/docker-letsencrypt'
+    restart: 'always'
     volumes_from:
         - 'data'
 
@@ -30,6 +39,14 @@ php-fpm:
         - '9000'
     volumes_from:
         - 'data'
+
+mongo:
+    image: mongo:3.2.1
+    restart: 'always'
+    volumes_from:
+        - 'data'
+    expose:
+      - "27017"
 
 mysql:
     image: mariadb:10.1

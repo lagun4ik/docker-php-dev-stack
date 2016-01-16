@@ -1,4 +1,4 @@
-Dockerized PHP development stack [![Build Status](https://travis-ci.org/lagun4ik/docker-php-dev-stack.svg)](https://travis-ci.org/lagun4ik/docker-php-dev-stack)
+Dockerized PHP stack [![Build Status](https://travis-ci.org/lagun4ik/docker-php-dev-stack.svg)](https://travis-ci.org/lagun4ik/docker-php-dev-stack)
 --------------------------
 
 * [Nginx 1.9.9](http://nginx.org/)
@@ -11,6 +11,7 @@ Dockerized PHP development stack [![Build Status](https://travis-ci.org/lagun4ik
 * [MongoDB 3.2](http://www.mongodb.org/)
 * [Memcached 1.4.25](http://memcached.org/)
 * [Redis 3.0.6](http://redis.io/)
+* [Let's Encrypt docker container](https://github.com/lagun4ik/docker-letsencrypt/)
 
 ## Database
 
@@ -20,11 +21,15 @@ If you need only one database, use the appropriate branches.
 git clone -b mysql https://github.com/lagun4ik/docker-php-dev-stack.git
 
 #mongo
-git clone -b mysql https://github.com/lagun4ik/docker-php-dev-stack.git
+git clone -b mongo https://github.com/lagun4ik/docker-php-dev-stack.git
 
 #mongo and mysql
 git clone -b master https://github.com/lagun4ik/docker-php-dev-stack.git
 ```
+
+## Enable Let's Encrypt
+
+Rename `_domains.json` to `domains.json` and change the settings in it.
 
 ## Run
 

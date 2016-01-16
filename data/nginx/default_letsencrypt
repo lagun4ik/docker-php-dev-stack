@@ -21,13 +21,14 @@ server {
 
 server {
   listen 443 ssl http2;
+  listen [::]:443 ipv6only=on ssl http2;
 
-  server_name  site;
+  server_name site;
   root /var/www/site;
   index index.php index.html;
 
-  ssl_certificate /etc/nginx/ssl/site.crt;
-  ssl_certificate_key /etc/nginx/ssl/site.key;
+  ssl_certificate /etc/letsencrypt/live/site/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/site/privkey.pem;
 
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
   ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5;
@@ -46,6 +47,12 @@ server {
 
   pagespeed EnableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
   #pagespeed DisableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
+
+  location /.well-known {
+      default_type 'text/plain';
+      root /usr/share/nginx/html;
+      try_files $uri =404;
+  }
 
   #location / {
   #    try_files $uri $uri/ /index.php$args;
