@@ -33,6 +33,7 @@ php-fpm:
     restart: always
     links:
         - 'mysql'
+        - 'mongo'
         - 'memcached'
         - 'redis'
     expose:

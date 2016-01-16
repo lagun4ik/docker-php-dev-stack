@@ -1,27 +1,23 @@
 server {
     listen 80;
-    listen       [::]:80 ipv6only=on;
     server_name  site;
     return 301 https://$host$request_uri;
 }
 
 server {
     listen       80;
-    listen       [::]:80 ipv6only=on;
     server_name  www.site;
     return 301 https://$host$request_uri;
 }
 
 server {
   listen 443 ssl http2;
-  listen [::]:443 ipv6only=on ssl http2;
   server_name  www.site;
   return 301 https://$host$request_uri;
 }
 
 server {
   listen 443 ssl http2;
-  listen [::]:443 ipv6only=on ssl http2;
 
   server_name site;
   root /var/www/site;
@@ -50,7 +46,7 @@ server {
 
   location /.well-known {
       default_type 'text/plain';
-      root /usr/share/nginx/html;
+      root /var/www/site;
       try_files $uri =404;
   }
 

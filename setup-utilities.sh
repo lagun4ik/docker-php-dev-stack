@@ -1,6 +1,6 @@
 #/bin/bash
 
-echo "set data patch (default ./data)"
+echo "Set data patch (./data):"
 read DATA_PATCH
 
 if [[ "$DATA_PATCH" = "" ]]
@@ -13,7 +13,7 @@ apt-get install -y apache2-utils unzip wget
 htpasswd -c $DATA_PATCH/nginx/.htpasswd root
 
 git clone https://github.com/codeb2cc/phpMemcachedAdmin $DATA_PATCH/www/localhost/phpMemcachedAdmin
-sed -i "s/127\.0\.0\.1/memcached)/g" $DATA_PATCH/www/localhost/phpMemcachedAdmin/Config/Memcache.php
+sed -i "s/127\.0\.0\.1/memcached/g" $DATA_PATCH/www/localhost/phpMemcachedAdmin/Config/Memcache.php
 
 sed -i "s/#//g" $DATA_PATCH/nginx/localhost.conf
 sed -i "s/deny/#deny/g" $DATA_PATCH/nginx/localhost.conf
