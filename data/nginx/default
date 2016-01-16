@@ -1,22 +1,24 @@
-upstream php-fpm {
-    server php-fpm:9000;
+server {
+    listen       80;
+    listen       [::]:80 ipv6only=on;
+    server_name  www.site;
+    return 301   http://$host$request_uri;
 }
 
 server {
     listen 80;
+    listen       [::]:80 ipv6only=on;
 
     server_name site;
     root /var/www/site;
     index index.php index.html;
 
-
     pagespeed RewriteLevel CoreFilters;
     pagespeed LoadFromFile "http://site/" "/var/www/site";
 
-    pagespeed EnableFilters pagespeed EnableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
-
+    pagespeed EnableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
     #pagespeed DisableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
-    
+
     #location / {
     #    try_files $uri $uri/ /index.php$args;
     #}
@@ -40,9 +42,14 @@ server {
         log_not_found off;
         access_log off;
     }
-    
+
     location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
         expires max;
         log_not_found off;
     }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+            root /usr/share/nginx/html;
+     }
 }
