@@ -9,6 +9,7 @@ data:
       - './data/nginx/:/etc/nginx/sites-enabled/'
       - './data/ssl/:/etc/nginx/ssl/'
       - './letsencrypt/live/:/etc/letsencrypt/live'
+      - './letsencrypt/archive/:/etc/letsencrypt/archive'
       - './letsencrypt/domains.json:/domains.json'
 
 nginx:

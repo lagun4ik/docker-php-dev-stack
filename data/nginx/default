@@ -1,7 +1,6 @@
 server {
-    listen       80;
-    server_name  www.site;
-    return 301   http://$host$request_uri;
+     server_name site;
+     return 301 https://site$request_uri;
 }
 
 server {
@@ -51,9 +50,8 @@ server {
             root /usr/share/nginx/html;
      }
 
-     location /.well-known {
-         default_type 'text/plain';
-         root /var/www/site;
-         try_files $uri =404;
+     location /.well-known/acme-challenge {
+       default_type 'text/plain';
+       root /var/www/examle.com;
      }
 }

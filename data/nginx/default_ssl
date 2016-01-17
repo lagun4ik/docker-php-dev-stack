@@ -1,19 +1,6 @@
 server {
-    listen 80;
-    server_name  site;
-    return 301 https://$host$request_uri;
-}
-
-server {
-    listen       80;
-    server_name  www.site;
-    return 301 https://$host$request_uri;
-}
-
-server {
-  listen 443 ssl http2;
-  server_name  www.site;
-  return 301 https://$host$request_uri;
+   server_name site;
+   return 301 https://site$request_uri;
 }
 
 server {
@@ -77,6 +64,11 @@ server {
   error_page 500 502 503 504 /50x.html;
   location = /50x.html {
           root /usr/share/nginx/html;
+   }
+
+   location /.well-known/acme-challenge {
+     default_type 'text/plain';
+     root /var/www/examle.com;
    }
 
 }
