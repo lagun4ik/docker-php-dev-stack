@@ -41,6 +41,8 @@ php-fpm:
         - '9000'
     volumes_from:
         - 'data'
+    environment:
+      PHP_INI_TYPE: production
 
 mongo:
     image: mongo:3.2.1
