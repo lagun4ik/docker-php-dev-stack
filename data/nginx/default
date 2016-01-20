@@ -1,10 +1,7 @@
 server {
-     server_name site;
-     return 301 https://site$request_uri;
-}
-
-server {
-    listen 80;
+    # catch all unsecure requests (both IPv4 and IPv6)
+    listen 80 default_server;
+    listen [::]:80 default_server ipv6only=on;
 
     server_name site;
     root /var/www/site;
@@ -13,8 +10,8 @@ server {
     pagespeed RewriteLevel CoreFilters;
     pagespeed LoadFromFile "http://site/" "/var/www/site";
 
-    pagespeed EnableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
-    #pagespeed DisableFilters remove_comments,collapse_whitespace,rewrite_images,resize_images,resize_rendered_image_dimensions,prioritize_critical_css,insert_dns_prefetch,combine_css,rewrite_css,combine_javascript,rewrite_javascript;
+    #pagespeed EnableFilters insert_dns_prefetch,responsive_images,combine_heads,outline_css,outline_javascript,move_css_above_scripts,move_css_to_head,rewrite_style_attributes,prioritize_critical_css,remove_comments,collapse_whitespace,elide_attributes,sprite_images;
+    #pagespeed DisableFilters ...
 
     #location / {
     #    try_files $uri $uri/ /index.php$args;
@@ -52,6 +49,6 @@ server {
 
      location /.well-known/acme-challenge {
        default_type 'text/plain';
-       root /var/www/examle.com;
+       root /var/www/site;
      }
 }
