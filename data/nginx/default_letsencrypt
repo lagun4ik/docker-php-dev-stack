@@ -40,6 +40,8 @@ server {
 
         resolver 8.8.8.8;
         ssl_stapling on;
+
+        # wget -O ca.pem https://www.startssl.com/certs/ca.pem
         ssl_trusted_certificate /etc/nginx/ssl/ca.pem;
 
         #don't send the nginx version number in error pages and Server header
@@ -88,7 +90,7 @@ server {
 
         # deny access to files, starting with dot (hidden) or ending with ~ (temp)
 
-        location /.well-known/acme-challenge {
+        location ^~ /.well-known/acme-challenge/ {
           default_type 'text/plain';
           root /var/www/site;
         }
@@ -112,7 +114,7 @@ server {
 
         # block of rules for static content
 
-        location ~ /{favicon.ico|favicon.png|robots.txt}$ {
+        location ~ /(favicon.ico|favicon.png|robots.txt)$ {
                 access_log off;
                 log_not_found off;
                 expires 1y;

@@ -47,7 +47,7 @@ server {
             root /usr/share/nginx/html;
      }
 
-     location /.well-known/acme-challenge {
+     location ^~ /.well-known/acme-challenge/ {
        default_type 'text/plain';
        root /var/www/site;
      }
