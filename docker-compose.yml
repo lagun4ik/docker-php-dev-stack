@@ -1,16 +1,16 @@
 data:
     image: 'busybox'
     tty: true
-    container_name: 'php-dev-stack_data'
+    container_name: 'data'
     volumes:
       - './data/www/:/var/www/'
       - './data/mongo/:/data/db/'
       - './data/mysql/:/var/lib/mysql/'
       - './data/nginx/:/etc/nginx/sites-enabled/'
       - './data/ssl/:/etc/nginx/ssl/'
-      - './letsencrypt/live/:/etc/letsencrypt/live'
-      - './letsencrypt/archive/:/etc/letsencrypt/archive'
-      - './letsencrypt/domains.json:/domains.json'
+      - './data/letsencrypt/live/:/etc/letsencrypt/live'
+      - './data/letsencrypt/archive/:/etc/letsencrypt/archive'
+      - './data/letsencrypt/domains.json:/domains.json'
 
 nginx:
     image: 'lagun4ik/docker-nginx-pagespeed'
