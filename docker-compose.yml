@@ -13,7 +13,7 @@ data:
       - './data/letsencrypt/domains.json:/domains.json'
 
 nginx:
-    image: 'lagun4ik/docker-nginx-pagespeed'
+    image: 'lagun4ik/docker-nginx-pagespeed:alpine'
     restart: 'always'
     links:
         - 'php-fpm'
@@ -45,7 +45,7 @@ php-fpm:
       PHP_INI_TYPE: production
 
 mongo:
-    image: mongo:3.2.1
+    image: mongo
     restart: 'always'
     volumes_from:
         - 'data'
@@ -53,7 +53,7 @@ mongo:
       - "27017"
 
 mysql:
-    image: mariadb:10.1
+    image: mariadb
     restart: 'always'
     volumes_from:
         - 'data'
@@ -63,14 +63,14 @@ mysql:
       MYSQL_ROOT_PASSWORD: password
 
 memcached:
-    image: memcached:1.4.25
+    image: memcached:alpine
     restart: 'always'
     mem_limit: 100m
     expose:
       - "11211"
 
 redis:
-    image: redis:3.0.6
+    image: redis:alpine
     restart: 'always'
     mem_limit: 100m
     expose:
