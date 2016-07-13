@@ -1,16 +1,16 @@
 Dockerized PHP stack [![Build Status](https://travis-ci.org/lagun4ik/docker-php-dev-stack.svg)](https://travis-ci.org/lagun4ik/docker-php-dev-stack)
 --------------------------
 
-* [Nginx 1.9.9](http://nginx.org/)
+* [Nginx](http://nginx.org/)
  * [ngx_pagespeed](https://github.com/pagespeed/ngx_pagespeed)
  * [nginx-upload-progress-module](https://github.com/masterzen/nginx-upload-progress-module)
 * [PHP7.0-FPM](http://php-fpm.org/)
  * [Installed php modules](#installed-php-modules)
  * [Composer](https://getcomposer.org/)
-* [MariaDB 3.2](https://mariadb.org/)
-* [MongoDB 3.2](http://www.mongodb.org/)
-* [Memcached 1.4.25](http://memcached.org/)
-* [Redis 3.0.6](http://redis.io/)
+* [MariaDB](https://mariadb.org/)
+* [MongoDB](http://www.mongodb.org/)
+* [Memcached](http://memcached.org/)
+* [Redis](http://redis.io/)
 * [Let's Encrypt docker container](https://github.com/lagun4ik/docker-letsencrypt/)
 
 ## Database
