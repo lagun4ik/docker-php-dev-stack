@@ -44,24 +44,12 @@ Install phpMyAdmin, phpMemcachedAdmin, pagespeedAdmin, phpRedisAdmin
 ```
 Go to `http://you_server_ip/`
 
-## Show services
-
-```bash
-docker-compose -p php-dev-stack ps
-```
-
 ## Composer
 
 Enter the name of your container.
 
 ```bash
-#Show container names
-docker ps | grep -P "\s([^\s]*php-fpm[^$]\s)|(IMAGE)"
-
-#Run bash in container
-docker run --rm -it \
-  --volumes-from php-dev-stack_data -w /var/www/ \
-  YOU_IMAGE_NAME bash
+docker exec -t $(docker-compose ps -q php-fpm) composer
 ```
 
 
@@ -70,11 +58,7 @@ docker run --rm -it \
 Enter the name of your container.
 
 ```bash
-#Show image name
-docker ps | grep -P "\s([^\s]*nginx[^\s]*$)|(NAMES$)"
-
-#Restart nginx
-docker exec -t YOU_CONTAINER_NAME bash -c "service nginx restart"
+docker exec -t $(docker-compose ps -q php-fpm) service nginx restart
 ```
 
 ## Look at the logs
@@ -86,19 +70,6 @@ docker-compose -p php-dev-stack logs
 # specific service
 docker-compose -p php-dev-stack logs nginx
 ```
-
-## Connect to DB
-Use `mongo` or `mysql` as a host for the database connection.
-```php
-$dbh = new PDO('mysql:host=mysql;dbname=' . $db, $user, $pass);
-```
-```php
-$manager = new MongoDB\Driver\Manager("mongodb://mongo");
-```
-
-## Memcached and Redis docker memory limit
-
-Change the value `mem_limit` in the file `docker-compose.yml`.
 
 ## Installed php modules
 ```
