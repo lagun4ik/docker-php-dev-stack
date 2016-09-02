@@ -46,8 +46,6 @@ Go to `http://you_server_ip/`
 
 ## Composer
 
-Enter the name of your container.
-
 ```bash
 docker exec -t $(docker-compose ps -q php-fpm) composer
 ```
@@ -55,10 +53,8 @@ docker exec -t $(docker-compose ps -q php-fpm) composer
 
 ## Restart nginx
 
-Enter the name of your container.
-
 ```bash
-docker exec -t $(docker-compose ps -q php-fpm) service nginx restart
+docker exec -t $(docker-compose ps -q nginx) service nginx restart
 ```
 
 ## Look at the logs
