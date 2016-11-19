@@ -34,7 +34,7 @@ Rename `_domains.json` to `domains.json` and change the settings in it.
 ## Run
 
 ```bash
-docker-compose -p php-dev-stack up -d
+docker-compose up -d
 ```
 
 ## Utilities
