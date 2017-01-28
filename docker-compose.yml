@@ -1,77 +1,48 @@
-data:
-    image: 'busybox'
-    tty: true
-    container_name: 'data'
-    volumes:
-      - './data/www/:/var/www/'
-      - './data/mongo/:/data/db/'
-      - './data/mysql/:/var/lib/mysql/'
-      - './data/nginx/:/etc/nginx/sites-enabled/'
-      - './data/ssl/:/etc/nginx/ssl/'
-      - './data/letsencrypt/live/:/etc/letsencrypt/live'
-      - './data/letsencrypt/archive/:/etc/letsencrypt/archive'
-      - './data/letsencrypt/domains.json:/domains.json'
+version: '2'
 
-nginx:
-    image: 'lagun4ik/docker-nginx-pagespeed:alpine'
-    restart: 'always'
-    links:
-        - 'php-fpm'
-    ports:
-        - '80:80'
-        - '443:443'
-    volumes_from:
-        - 'data'
-
-letsencrypt:
-    image: 'lagun4ik/docker-letsencrypt'
-    restart: 'always'
-    volumes_from:
-        - 'data'
-
-php-fpm:
-    image: 'lagun4ik/docker-php7-fpm'
+services:
+  nginx:
     restart: always
-    links:
-        - 'mysql'
-        - 'mongo'
-        - 'memcached'
-        - 'redis'
-    expose:
-        - '9000'
-    volumes_from:
-        - 'data'
-    environment:
-      PHP_INI_TYPE: production
+    image: lagun4ik/nginx-pagespeed
+    env_file: docker-compose.env
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./data/letsencrypt:/var/letsencrypt
+      - ./data/nginx/sites-enabled:/etc/nginx/sites-enabled
+      - ./data/nginx/snippets:/etc/nginx/snippets
+      - ./data/nginx/ngx_pagespeed:/var/cache/ngx_pagespeed
+      - ./data/www/:/var/www/
+      - /etc/localtime:/etc/localtime:ro
 
-mongo:
-    image: mongo
-    restart: 'always'
-    volumes_from:
-        - 'data'
-    expose:
-      - "27017"
+  letsencrypt:
+    restart: always
+    image: lagun4ik/letsencrypt-webroot
+    volumes:
+      - ./data/letsencrypt/conf:/etc/letsencrypt
+      - ./data/letsencrypt/www:/tmp/letsencrypt
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
 
-mysql:
-    image: mariadb
-    restart: 'always'
-    volumes_from:
-        - 'data'
-    expose:
-      - "3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+  php:
+      image: lagun4ik/php7-fpm:dev
+      restart: always
+      volumes:
+        - ./data/www/:/var/www/
 
-memcached:
-    image: memcached:alpine
-    restart: 'always'
-    mem_limit: 100m
-    expose:
-      - "11211"
+  mysql:
+      image: mariadb
+      restart: always
+      volumes:
+          - ./data/mysql/:/var/lib/mysql/
 
-redis:
-    image: redis:alpine
-    restart: 'always'
-    mem_limit: 100m
-    expose:
-      - "6379"
+  memcached:
+      image: memcached:alpine
+      restart: always
+      mem_limit: 100m
+
+  redis:
+      image: redis:alpine
+      restart: always'
+      mem_limit: 100m

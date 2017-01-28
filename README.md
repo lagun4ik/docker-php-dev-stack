@@ -1,41 +1,13 @@
 Dockerized PHP stack [![Build Status](https://travis-ci.org/lagun4ik/docker-php-dev-stack.svg)](https://travis-ci.org/lagun4ik/docker-php-dev-stack)
 --------------------------
 
-* [Nginx](http://nginx.org/)
- * [ngx_pagespeed](https://github.com/pagespeed/ngx_pagespeed)
- * [nginx-upload-progress-module](https://github.com/masterzen/nginx-upload-progress-module)
-* [PHP7.0-FPM](http://php-fpm.org/)
- * [Installed php modules](#installed-php-modules)
- * [Composer](https://getcomposer.org/)
-* [MariaDB](https://mariadb.org/)
-* [MongoDB](http://www.mongodb.org/)
-* [Memcached](http://memcached.org/)
-* [Redis](http://redis.io/)
-* [Let's Encrypt docker container](https://github.com/lagun4ik/docker-letsencrypt/)
-
-## Database
-
-If you need only one database, use the appropriate branches.
-```bash
-#mysql
-git clone -b mysql https://github.com/lagun4ik/docker-php-dev-stack.git
-
-#mongo
-git clone -b mongo https://github.com/lagun4ik/docker-php-dev-stack.git
-
-#mongo and mysql
-git clone -b master https://github.com/lagun4ik/docker-php-dev-stack.git
-```
-
-## Enable Let's Encrypt
-
-Rename `_domains.json` to `domains.json` and change the settings in it.
-
-## Run
-
-```bash
-docker-compose up -d
-```
+* [Nginx](https://github.com/lagun4ik/docker-nginx-pagespeed)
+* [PHP7.0-FPM](https://github.com/lagun4ik/docker-php7-fpm)
+* [MariaDB](https://hub.docker.com/_/mariadb/)
+* [MongoDB](https://hub.docker.com/_/mongo/)
+* [Memcached](https://hub.docker.com/_/memcached/)
+* [Redis](https://hub.docker.com/_/redis/)
+* [Let's Encrypt docker container](https://github.com/lagun4ik/docker-letsencrypt-webroot)
 
 ## Utilities
 Install phpMyAdmin, phpMemcachedAdmin, pagespeedAdmin, phpRedisAdmin
@@ -44,31 +16,10 @@ Install phpMyAdmin, phpMemcachedAdmin, pagespeedAdmin, phpRedisAdmin
 ```
 Go to `http://you_server_ip/`
 
-## Composer
-
-```bash
-docker exec -t $(docker-compose ps -q php-fpm) composer
-```
-
-
-## Restart nginx
-
-```bash
-docker exec -t $(docker-compose ps -q nginx) service nginx restart
-```
-
-## Look at the logs
-
-```bash
-# all logs
-docker-compose -p php-dev-stack logs
-
-# specific service
-docker-compose -p php-dev-stack logs nginx
-```
 
 ## Installed php modules
 ```
+amqp
 bcmath
 bz2
 Core
@@ -76,14 +27,13 @@ ctype
 curl
 date
 dom
-exif
 fileinfo
 filter
 gd
 gettext
+gmp
 hash
 iconv
-intl
 json
 libxml
 mbstring
@@ -91,34 +41,34 @@ mcrypt
 memcached
 mongodb
 mysqli
-mysqlnd
+odbc
 openssl
 pcntl
 pcre
 PDO
+pdo_dblib
 pdo_mysql
+PDO_ODBC
+pdo_pgsql
 pdo_sqlite
-Phar
-posix
-readline
-recode
 redis
 Reflection
 session
 SimpleXML
-sockets
+soap
 SPL
 sqlite3
 standard
 tokenizer
+xdebug
 xml
 xmlreader
+xmlrpc
 xmlwriter
 Zend OPcache
 zip
-zlib
+
+[Zend Modules]
+Xdebug
 Zend OPcache
 ```
-
-##Thanks
-@ProPheT777

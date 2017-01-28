@@ -1,4 +1,4 @@
-#/bin/bash
+#!/usr/bin/env bash
 
 echo "Set data patch (./data):"
 read DATA_PATCH
@@ -8,8 +8,6 @@ then
   DATA_PATCH="./data"
 fi
 
-apt-get update
-apt-get install -y apache2-utils unzip wget
 htpasswd -c $DATA_PATCH/nginx/.htpasswd root
 
 git clone https://github.com/codeb2cc/phpMemcachedAdmin $DATA_PATCH/www/localhost/phpMemcachedAdmin
@@ -32,5 +30,3 @@ git clone https://github.com/nrk/predis.git $DATA_PATCH/www/localhost/phpredisad
 
 mv $DATA_PATCH/www/localhost/phpredisadmin/includes/config.sample.inc.php $DATA_PATCH/www/localhost/phpredisadmin/includes/config.inc.php
 sed -i -r "s/127.0.0.1/redis/g" $DATA_PATCH/www/localhost/phpredisadmin/includes/config.inc.php
-
-echo "restart nginx"
