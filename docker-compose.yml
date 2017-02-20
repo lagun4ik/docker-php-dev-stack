@@ -46,5 +46,5 @@ services:
 
   redis:
     image: redis:alpine
-    restart: always'
+    restart: always
     mem_limit: 100m
