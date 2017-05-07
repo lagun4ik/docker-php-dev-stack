@@ -1,0 +1,3 @@
+.docker/nginx/pagespeed_cache
+.docker/mysql/data/
+.docker/composer/cache

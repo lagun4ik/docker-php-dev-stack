@@ -1,50 +1,81 @@
-version: '2'
+version: '3'
 
 services:
   nginx:
     restart: always
-    image: lagun4ik/nginx-pagespeed
+    image: lagun4ik/nginx-pagespeed:1.13.0
     env_file: docker-compose.env
     ports:
-      - 80:80
-      - 443:443
+      - "8080:80"
     volumes:
-      - ./data/letsencrypt:/var/letsencrypt
-      - ./data/nginx/sites-enabled:/etc/nginx/sites-enabled
-      - ./data/nginx/ngx_pagespeed:/var/cache/ngx_pagespeed
-      - ./data/www/:/var/www/
+      - ./.docker/nginx/conf/sites-enabled:/etc/nginx/sites-enabled
+      - ./.docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./.docker/nginx/pagespeed_cache:/var/cache/ngx_pagespeed
+      - ./application:/var/www/application
       - /etc/localtime:/etc/localtime:ro
-
-  letsencrypt:
-    restart: always
-    image: lagun4ik/letsencrypt-webroot
-    env_file: docker-compose.env
-    volumes:
-      - ./data/letsencrypt/conf:/etc/letsencrypt
-      - ./data/letsencrypt/www:/tmp/letsencrypt
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - php
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
 
   php:
-    image: lagun4ik/php7-fpm:dev
+    image: lagun4ik/php7-fpm:7.1.4-r3-dev
     env_file: docker-compose.env
     restart: always
     volumes:
-      - ./data/www/:/var/www/
+      - ./application/:/var/www/application
+    depends_on:
+      - mysql
+      - redis
+      - memcached
+
+  composer:
+    image: lagun4ik/php7-fpm:7.1.4-r3-dev
+    env_file: docker-compose.env
+    working_dir: /var/www/application
+    command: sh -c "composer install && composer dump -o"
+    environment:
+      - PHP_MEMORY_LIMIT=-1
+    volumes:
+      - ./application:/var/www/application
+      - ./.docker/composer/cache:/root/.composer
+    depends_on:
+      - mysql
+      - redis
+      - memcached
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
 
   mysql:
-    image: mariadb
+    image: mariadb:10.1.23
     env_file: docker-compose.env
     restart: always
+    ports:
+      - "33060:3306"
     volumes:
-        - ./data/mysql/:/var/lib/mysql/
+        - ./.docker/mysql/:/var/lib/mysql/
+        - ./.docker/mysql/conf/dev.cnf:/etc/mysql/conf.d/dev.cnf
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
 
   memcached:
-    image: memcached:alpine
+    image: memcached:1.4.36-alpine
     restart: always
-    mem_limit: 100m
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
 
   redis:
-    image: redis:alpine
+    image: redis:3.2.8-alpine
     restart: always
-    mem_limit: 100m
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"

@@ -1,0 +1,5 @@
+[mysqld]
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow.log
+long_query_time = 1
+bind-address = 0.0.0.0
