@@ -30,6 +30,10 @@ services:
       - mysql
       - redis
       - memcached
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
 
   composer:
     image: lagun4ik/php7-fpm:7.1.4-r3-dev
